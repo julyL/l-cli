@@ -1,6 +1,6 @@
 ## l-cli
 
-> 集成前端构建相关功能的 cli 工具，支持命令形式执行
+> 集成前端构建相关功能的 cli 工具，全局安装之后以 l-cli 命令执行
 
 ### 安装
 
@@ -43,7 +43,7 @@ $ l-cli start
 修改当前执行路径下的package.json的内容文件添加pre-commit，来配合Eslint、Prettier进行代码检测。
 
 添加合并配置如下：
-```json
+```js
 {
   'husky': {
     'hooks': {
@@ -68,14 +68,14 @@ $ l-cli start
 $ l-cli lint
 ```
 
-[eslint-config-alloy]([eslint-config-alloy](https://github.com/AlloyTeam/eslint-config-alloy))
+[eslint-config-alloy项目地址](https://github.com/AlloyTeam/eslint-config-alloy)
 
 #### mock服务
 
 ```bash
 $ l-cli mock  [目录]  <端口默认8000>
 ```
-在指定 dir 目录,启动 port 端口的静态服务用于接口mock。进行接口 mock 时，只需要在 dir 目录下新建 json 文件。json文件内容对应接口返回内容,json文件名会转换为接口路径, 转换规则为 `_` 替换为 `/`， 如： api_userinfo.json  =>  /api/userinfo
+在指定目录下的启动mock服务。进行接口 mock 时，只需要在指定目录下新建 json 文件。json文件内容对应接口返回内容,json文件名会按照一定规则转换为接口名, 转换规则为json文件名中的 `_` 替换为 `/`， 如： api_userinfo.json  =>  /api/userinfo
 
 ```bash
 $ l-cli mock './test/mock' 8000
@@ -85,10 +85,10 @@ $ l-cli mock './test/mock' 8000
 
 #### 图片压缩
 
-使用TinyPng Api 进行图片压缩，默认会添加_tiny后缀
+使用TinyPng Api 进行图片压缩，压缩后的图片会添加`_tiny`的默认后缀
 
 ```bash
-$ l-cli mock <glob 匹配规则> [图片后缀]
+$ l-cli mock <glob匹配规则> [图片后缀]
 
 $ l-cli tinypng '**/*.{jpg,png}'
 # 使用tinypng Api进行图片压缩  1.png => 1_tiny.png
@@ -96,10 +96,10 @@ $ l-cli tinypng '**/*.{jpg,png}'
 
 #### 去除后缀
 
-去除压缩图片产生的，默认后缀为_tiny
+去除压缩图片产生的默认后缀`_tiny`
 
 ```bash
-$ l-cli rms <glob 匹配规则> [图片后缀]
+$ l-cli rms <glob匹配规则> [图片后缀]
 
 $ l-cli rms '**/*.{jpg,png}'
 # 1_tiny.png => 1.png
@@ -110,7 +110,7 @@ $ l-cli rms '**/*.{jpg,png}'
 对文件中的px和rem单位进行互相转换
 
 ```bash
-$ l-cli mock <glob 匹配规则> [转换比例]
+$ l-cli mock <glob匹配规则> [转换比例]
 
 $ l-cli px2rem '**/*.css'
 # px转换为rem, 默认转换比例为100, 100px => 1rem
@@ -124,7 +124,7 @@ $ l-cli rem2px '**/*.css'
 将图片格式转换为webp，默认压缩质量为80(max=100) 1.png => 1.webp
 
 ```bash
-$ l-cli webp <glob 匹配规则> [转换比例]
+$ l-cli webp <glob匹配规则> [转换比例]
 
 $ l-cli webp '**/*.png'
 ```
