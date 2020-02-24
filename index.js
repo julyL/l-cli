@@ -7,7 +7,26 @@ errorHandle();
 
 let package = require(path.join(__dirname, './package.json'));
 
-program.version(package.version);
+program.parse(process.argv);
+
+if (program.args.length === 0) {
+  program
+    .name('l-cli')
+    .usage('<command> [options]')
+    .outputHelp();
+}
+
+program.on('command:*', function() {
+  console.error(
+    'Invalid command: %s\nSee --help for a list of available commands.',
+    program.args.join(' ')
+  );
+  process.exit(1);
+});
+
+program.version(package.version, '-v, --version', 'output the current version');
+
+program.name('l-cli').usage('<command> [options]');
 
 program
   .command('start')

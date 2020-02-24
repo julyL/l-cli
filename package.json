@@ -1,6 +1,6 @@
 {
   "name": "@julylb/cli",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "simple cli",
   "main": "index.js",
   "bin": {
@@ -37,7 +37,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,vue}": "prettier --write"
+    "*.js": "prettier --write './**/*.js'"
   },
   "preferGlobal": true,
   "dependencies": {
