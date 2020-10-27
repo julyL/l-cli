@@ -1,0 +1,1 @@
+<view className="page"></view>;

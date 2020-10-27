@@ -1,0 +1,7 @@
+page {
+  background: #000;
+  overflow: hidden;
+}
+.page {
+  height: 100vh;
+}

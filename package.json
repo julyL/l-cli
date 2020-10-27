@@ -47,6 +47,7 @@
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-vue": "^5.2.3",
     "fs-extra": "^8.1.0",
+    "fse": "^4.0.1",
     "glob": "^7.1.6",
     "imagemin": "^7.0.1",
     "imagemin-webp": "^5.1.0",
