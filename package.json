@@ -42,7 +42,7 @@
   "preferGlobal": true,
   "dependencies": {
     "@koa/cors": "^3.0.0",
-    "commander": "^4.1.1",
+    "commander": "^7.1.0",
     "eslint-config-alloy": "^2.0.4",
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-vue": "^5.2.3",

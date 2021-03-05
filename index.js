@@ -7,15 +7,6 @@ errorHandle();
 
 let package = require(path.join(__dirname, './package.json'));
 
-program.parse(process.argv);
-
-if (program.args.length === 0) {
-  program
-    .name('l-cli')
-    .usage('<command> [options]')
-    .outputHelp();
-}
-
 program.on('command:*', function() {
   console.error(
     'Invalid command: %s\nSee --help for a list of available commands.',
@@ -24,9 +15,9 @@ program.on('command:*', function() {
   process.exit(1);
 });
 
-program.version(package.version, '-v, --version', 'output the current version');
+// program.version(package.version, '-v, --version', 'output the current version');
 
-program.name('l-cli').usage('<command> [options]');
+// program.name('l-cli').usage('<command> [options]');
 
 program
   .command('start')
@@ -97,6 +88,16 @@ program
   .description('css单位 rem转化为px, 默认ratio=100, 1rem => 100px')
   .action((pattern, ratio) => {
     join('./lib/rem2px')({
+      pattern,
+      ratio
+    });
+  });
+
+program
+  .command('unitTransform [pattern] [ratio] [originUnit] [targetUnit]')
+  .description('单位转换, 默认ratio=100, 1[originUnit] => [ratio][targetUnit]')
+  .action((pattern, ratio) => {
+    join('./lib/unitTransform')({
       pattern,
       ratio
     });
