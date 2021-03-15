@@ -15,6 +15,7 @@ module.exports = {
     // myGlobal: false
   },
   rules: {
+    indent: 0
     // 自定义你的规则
   }
 };

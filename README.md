@@ -29,8 +29,7 @@ Commands:
   tinypng [pattern] [suffix]        匹配图片进行压缩处理,默认添加后缀_tiny
   rmsuffix [pattern] [suffix]       去除tinypng产生的后缀,默认去除_tiny
   webp [pattern] [stuff] [quality]  将图片格式转换为webp
-  px2rem [pattern] [ratio]          css单位 px转化为rem, 默认ratio=100, 100px => 1rem
-  rem2px [pattern] [ratio]          css单位 rem转化为px, 默认ratio=100, 1rem => 100px
+  unitTo [pattern]                  对文本中指定格式的单位进行转换,如：1rem=100px
   new [dir]                         新建样本文件
 ```
 
@@ -105,18 +104,13 @@ $ l-cli rms '**/*.{jpg,png}'
 # 1_tiny.png => 1.png
 ```
 
-#### px 和 rem 互相转换
+#### 单位比例转换
 
-对文件中的px和rem单位进行互相转换
+扫描文件中的文本,对其中匹配的数字按比例进行转换
+例如将css中的px转换为rem单位
 
 ```bash
-$ l-cli mock <glob匹配规则> [转换比例]
-
-$ l-cli px2rem '**/*.css'
-# px转换为rem, 默认转换比例为100, 100px => 1rem
-
-$ l-cli rem2px '**/*.css'
-# rem转换为px, 默认转换比例为100, 1rem => 100px
+$ l-cli unitTo '**/*.css'
 ```
 
 #### 图片转webp格式

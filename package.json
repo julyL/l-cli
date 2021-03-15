@@ -29,7 +29,8 @@
     "eslint-config-alloy": "^2.1.1",
     "husky": "^3.0.0",
     "lint-staged": "^10.13.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "number-precision": "^1.5.0"
   },
   "husky": {
     "hooks": {
@@ -60,6 +61,7 @@
     "merge-anything": "^3.0.2",
     "minimist": "^1.2.0",
     "mixin-deep": "^2.0.1",
+    "number-precision": "^1.5.0",
     "ora": "^4.0.3",
     "webp-converter": "^2.2.3"
   }

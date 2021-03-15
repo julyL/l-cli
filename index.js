@@ -2,6 +2,7 @@
 const program = require('commander');
 const path = require('path');
 const errorHandle = require('./utils/errorHandle');
+const inquirer = require('inquirer');
 
 errorHandle();
 
@@ -74,33 +75,37 @@ program
   });
 
 program
-  .command('px2rem [pattern] [ratio]')
-  .description('css单位 px转化为rem, 默认ratio=100, 100px => 1rem')
-  .action((pattern, ratio) => {
-    join('./lib/px2rem')({
-      pattern,
-      ratio
-    });
-  });
-
-program
-  .command('rem2px [pattern] [ratio]')
-  .description('css单位 rem转化为px, 默认ratio=100, 1rem => 100px')
-  .action((pattern, ratio) => {
-    join('./lib/rem2px')({
-      pattern,
-      ratio
-    });
-  });
-
-program
-  .command('unitTransform [pattern] [ratio] [originUnit] [targetUnit]')
-  .description('单位转换, 默认ratio=100, 1[originUnit] => [ratio][targetUnit]')
-  .action((pattern, ratio) => {
-    join('./lib/unitTransform')({
-      pattern,
-      ratio
-    });
+  .command('unitTo [pattern] ')
+  .description('对文本中指定格式的单位进行转换,如：1rem=100px')
+  .action((pattern) => {
+    inquirer.prompt([
+      {
+        type: 'input',
+        message: '请输入转换规则:如 1rem=100px\n',
+        name: 'type',
+        validate: function(answer) {
+          var done = this.async();
+          let validateRegex = /^([^a-zA-Z]+)([a-zA-Z]+)\s*=\s*([^a-zA-Z]+)([a-zA-Z]+)$/;
+          let m = answer.match(validateRegex);
+          if (m) {
+            join('./lib/convertUnit')({
+              pattern,
+              ratio: m[3] / m[1],
+              originUnit: m[2],
+              targetUnit: m[4]
+            })
+              .then(() => {
+                done(null, true);
+              })
+              .catch((err) => {
+                done('处理异常:' + err);
+              });
+          } else {
+            done('请输入有效规则如：1rem=100px');
+          }
+        }
+      }
+    ]);
   });
 
 program
