@@ -1,1 +1,0 @@
-<view className="page">Hello<view>
