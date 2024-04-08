@@ -29,6 +29,8 @@ Commands:
   tinypng [pattern] [suffix]        匹配图片进行压缩处理,默认添加后缀_tiny
   rmsuffix [pattern] [suffix]       去除tinypng产生的后缀,默认去除_tiny
   webp [pattern] [stuff] [quality]  将图片格式转换为webp
+  rpx [pattern]                     将pattern匹配的文件中的px单位转换为rpx,1px=2rpx
+  px2rpx [pattern]                  将pattern匹配的文件中的rpx单位转换为px,2rpx=1px
   unitTo [pattern]                  对文本中指定格式的单位进行转换,如：1rem=100px
   new [dir]                         新建样本文件
 ```

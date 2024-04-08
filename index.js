@@ -109,6 +109,80 @@ program
   });
 
 program
+  .command('rpx [pattern]')
+  .description('输入需要进行rpx转换的文件,1px会转换为2rpx')
+  .action((pattern) => {
+    if (pattern) {
+      join('./lib/convertUnit')({
+        pattern,
+        ratio: 2,
+        originUnit: 'px',
+        targetUnit: 'rpx'
+      });
+      return;
+    }
+    inquirer.prompt([
+      {
+        type: 'input',
+        message: '请输入转换文件',
+        name: 'type',
+        validate: function(answer) {
+          var done = this.async();
+          join('./lib/convertUnit')({
+            pattern: answer,
+            ratio: 2,
+            originUnit: 'px',
+            targetUnit: 'rpx'
+          })
+            .then(() => {
+              done(null, true);
+            })
+            .catch((err) => {
+              done('处理异常:' + err);
+            });
+        }
+      }
+    ]);
+  });
+
+program
+  .command('px2rpx [pattern]')
+  .description('输入需要进行px转换的文件,2rpx会转换为1px')
+  .action((pattern) => {
+    if (pattern) {
+      join('./lib/convertUnit')({
+        pattern,
+        ratio: 1 / 2,
+        originUnit: 'rpx',
+        targetUnit: 'px'
+      });
+      return;
+    }
+    inquirer.prompt([
+      {
+        type: 'input',
+        message: '请输入转换文件',
+        name: 'type',
+        validate: function(answer) {
+          var done = this.async();
+          join('./lib/convertUnit')({
+            pattern: answer,
+            ratio: 1 / 2,
+            originUnit: 'rpx',
+            targetUnit: 'px'
+          })
+            .then(() => {
+              done(null, true);
+            })
+            .catch((err) => {
+              done('处理异常:' + err);
+            });
+        }
+      }
+    ]);
+  });
+
+program
   .command('new [dir]')
   .description('新建样本文件')
   .action((dir) => {
