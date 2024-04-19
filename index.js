@@ -191,6 +191,24 @@ program
     });
   });
 
+program
+  .command('scanImage')
+  .description('扫描小程序图片资源,删除未使用图片')
+  .action((dir) => {
+    join('./lib/scanImage')({
+      dir
+    });
+  });
+
+program
+  .command('removeWxc')
+  .description('删除./components文件内未使用到的组件')
+  .action((dir) => {
+    join('./lib/removeWxUnUseComponent')({
+      dir
+    });
+  });
+
 program.parse(process.argv);
 
 function join(file) {
