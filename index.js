@@ -192,19 +192,28 @@ program
   });
 
 program
-  .command('scanImage')
-  .description('扫描小程序图片资源,删除未使用图片')
+  .command('wxScanImage')
+  .description('扫描小程序图片依赖关系,删除未使用图片')
   .action((dir) => {
-    join('./lib/scanImage')({
+    join('./lib/wxScanImage')({
       dir
     });
   });
 
 program
-  .command('removeWxc')
+  .command('wxClassifyImage')
+  .description('扫描小程序图片被子包的引用关系')
+  .action((dir) => {
+    join('./lib/wxClassifyImage')({
+      dir
+    });
+  });
+
+program
+  .command('wxRemoveComponent')
   .description('删除./components文件内未使用到的组件')
   .action((dir) => {
-    join('./lib/removeWxUnUseComponent')({
+    join('./lib/wxRemoveComponent')({
       dir
     });
   });

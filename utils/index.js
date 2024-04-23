@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
-const askIf = require('../utils/askIf');
+
 const globIgnore = '**/{node_modules,miniprogram_npm}/**';
+const currentDirectory = process.cwd();
 
 /**
  * 获取文件夹下所有文件名和文件路径
@@ -58,7 +59,6 @@ function getFileContent(filePath) {
  */
 function extractImageLinks({ filePath, fileContent }) {
   let arr = extractImageAbsoluteLinks(fileContent);
-  const currentDirectory = process.cwd();
   const imageFullPathList1 = arr.map((imageLink) => {
     return path.join(currentDirectory, imageLink).replace(/\\/g, '/');
   });
@@ -118,87 +118,13 @@ function getFileImageLinks(filePath) {
   }
 }
 
-/**
- * 获取扫描内容
- * @param {string} scanFolder - 扫描目录路径
- */
-async function scanImage({ scanFolder, isRemove = true }) {
-  let globPath = scanFolder + '/**/*.{json,js,html,jsx,wxml,axml}';
-  let fileList = glob.sync(globPath, {
-    ignore: globIgnore
-  });
-
-  // 所有使用到的图片资源
-  let allUsedImageLinks = [];
-  fileList.forEach((file) => {
-    let links = getFileImageLinks(file);
-    allUsedImageLinks = [...allUsedImageLinks, ...links];
-  });
-  allUsedImageLinks = allUsedImageLinks.filter(
-    (link, index) => allUsedImageLinks.indexOf(link) === index
-  );
-
-  // fs.writeFileSync(
-  //   path.resolve(__dirname, 'allUsedImageLinks.txt'),
-  //   allUsedImageLinks.join('\n')
-  // );
-
-  // 检测到的所有图片资源
-  let allImageLinks = getAllImagePaths(process.cwd());
-
-  let unusedImageLinks = allImageLinks.filter(
-    (item) => !allUsedImageLinks.includes(item)
-  );
-
-  //  wxml中的动态图片链接如： /images/{{xxx}}.png
-  let dynamicImageLinks = allUsedImageLinks.filter((item) =>
-    item.includes('{{')
-  );
-  if (dynamicImageLinks.length && isRemove) {
-    console.log('以下图片链接是动态的无法自动删除：', dynamicImageLinks);
-    return;
-    // throw new Error('动态图片链接：', dynatic);
-  }
-
-  // if (isRemove) {
-  //   unusedImageLinks.forEach((item) => {
-  //     fs.unlinkSync(item);
-  //   });
-  // }
-
-  let missingImageLinks = allUsedImageLinks.filter(
-    (link) => !allImageLinks.includes(link)
-  );
-
-  // fs.writeFileSync(
-  //   path.resolve(process.cwd(), 'result.log'),
-  //   '未使用到的图片:\n' +
-  //     unusedImageLinks.join('\n') +
-  //     '\n缺少的图片:\n' +
-  //     missingImageLinks.join('\n'),
-  //   { encoding: 'utf8' }
-  // );
-
-  console.log('\n未使用的图片链接:\n', unusedImageLinks);
-  console.log('\n缺失的图片链接:\n', missingImageLinks);
-
-  if (!unusedImageLinks.length) {
-    return;
-  }
-
-  let answer = await askIf({
-    message: '\n\n是否删除未使用的图片'
-  });
-  if (answer) {
-    unusedImageLinks.forEach((item) => {
-      fs.unlinkSync(item);
-    });
-    console.log('删除成功');
-  }
-}
-
-module.exports = () => {
-  scanImage({ scanFolder: process.cwd() });
+module.exports = {
+  globIgnore,
+  getFolderAllFileName,
+  getAllImagePaths,
+  getFileContent,
+  extractImageLinks,
+  extractImageRelativeLinks,
+  extractImageAbsoluteLinks,
+  getFileImageLinks
 };
-
-// scanImage({ scanFolder: path.resolve(__dirname, '../../') });
