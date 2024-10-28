@@ -218,6 +218,15 @@ program
     });
   });
 
+program
+  .command('publishMiniApp')
+  .description('发布小程序')
+  .action((dir) => {
+    join('./lib/publishMiniApp/index.js')({
+      dir
+    });
+  });
+
 program.parse(process.argv);
 
 function join(file) {
