@@ -1,1 +1,8 @@
-<view class="page">Hello</view>
+<view class="page">
+  <navbar
+    type="back"
+    class="my_navbar"
+    bind:goBack="goBack"
+    titleText=""
+  ></navbar>
+</view>
